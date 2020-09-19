@@ -27,7 +27,7 @@ class GameTest {
     }
 
     @Test
-    fun `all spares and nines score 199`() {
+    fun `all spares and nines score 190`() {
         val sparesAndNine = (1..10).map { "9,1" }.joinToString(separator = ",") + ",9"
         val game = BowlingGame(sparesAndNine)
         assertThat(game.score).isEqualTo(190)
