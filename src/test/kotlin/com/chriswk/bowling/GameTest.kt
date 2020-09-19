@@ -56,4 +56,53 @@ class GameTest {
         assertThat(BowlingGame(oddBall).score).isEqualTo(59)
     }
 
+    @Test
+    fun `A game with all strikes outputs correctly`() {
+        val allStrikes = (1..12).map { "10" }.joinToString(separator = ",")
+        assertThat(BowlingGame(allStrikes).report()).isEqualTo(
+            """
+            #| 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
+            #| X | X | X | X | X | X | X | X | X | XXX |
+            #score: 300
+        """.trimMargin("#"))
+    }
+
+    @Test
+    fun `A game with alternating spares and strikes outputs correctly`() {
+        val game = BowlingGame("5,5,10,5,5,10,5,5,10,5,5,10,5,5,10,5,5")
+        assertThat(game.report()).isEqualTo(
+         """
+            #| 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
+            #| 5, / | X | 5, / | X | 5, / | X | 5, / | X | 5, / | X, 5, / |
+            #score: 200
+            """.trimMargin("#")
+        )
+    }
+
+    @Test
+    fun `A game with a strike and open in the 10th outputs correctly`() {
+        val game = BowlingGame("5,5,10,5,5,10,5,5,10,5,5,10,5,5,10,5,4")
+        assertThat(game.report()).isEqualTo(
+            """
+            #| 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
+            #| 5, / | X | 5, / | X | 5, / | X | 5, / | X | 5, / | X, 5, 4 |
+            #score: 199
+            """.trimMargin("#")
+        )
+
+    }
+
+    @Test
+    fun `A game with a spare and strike in the 10th outputs correctly`() {
+        val game = BowlingGame("5,5,10,5,5,10,5,5,10,5,5,10,5,5,5,5,10")
+        assertThat(game.report()).isEqualTo(
+            """
+            #| 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
+            #| 5, / | X | 5, / | X | 5, / | X | 5, / | X | 5, / | 5, /, X |
+            #score: 195
+            """.trimMargin("#")
+        )
+
+    }
+
 }
