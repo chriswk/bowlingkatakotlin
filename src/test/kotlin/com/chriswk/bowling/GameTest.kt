@@ -105,4 +105,17 @@ class GameTest {
 
     }
 
+    @Test
+    fun `A game with two strikes and an open score in the 10th outputs correctly`() {
+        val game = BowlingGame("5,5,10,5,5,10,5,5,10,5,5,10,5,5,10,10,5")
+        assertThat(game.report()).isEqualTo(
+            """
+            #| 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
+            #| 5, / | X | 5, / | X | 5, / | X | 5, / | X | 5, / | X, X, 5 |
+            #score: 205
+            """.trimMargin("#")
+        )
+
+    }
+
 }

@@ -31,8 +31,8 @@ open class StrikeFrame(rolls: IntArray, frame: Int, rollIdx: Int) : Frame(rolls,
         return if(frame == 10) {
             if (firstBonusRoll() == 10 && secondBonusRoll() == 10) {
                 "XXX"
-            } else if (firstBonusRoll() + secondBonusRoll() == 10) {
-                "X, ${SpareFrame(rolls, 11, nextFrame())}"
+            } else if (firstBonusRoll() == 10) {
+                "X, X, ${secondBonusRoll()}"
             } else {
                 "X, ${OpenFrame(rolls, 11, nextFrame())}"
             }
