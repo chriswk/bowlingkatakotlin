@@ -62,7 +62,7 @@ class GameTest {
         assertThat(BowlingGame(allStrikes).report()).isEqualTo(
             """
             #| 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
-            #| X | X | X | X | X | X | X | X | X | XXX |
+            #| X | X | X | X | X | X | X | X | X | X, X, X |
             #score: 300
         """.trimMargin("#"))
     }
@@ -113,6 +113,27 @@ class GameTest {
             #| 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
             #| 5, / | X | 5, / | X | 5, / | X | 5, / | X | 5, / | X, X, 5 |
             #score: 205
+            """.trimMargin("#")
+        )
+
+    }
+
+    @Test
+    fun `Gutter balls gets outputted as '-'`() {
+        val game = BowlingGame("5,5,10,5,5,10,5,5,10,5,5,10,5,5,10,10,0")
+        assertThat(game.report()).isEqualTo(
+            """
+            #| 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
+            #| 5, / | X | 5, / | X | 5, / | X | 5, / | X | 5, / | X, X, - |
+            #score: 200
+            """.trimMargin("#")
+        )
+        val game2 = BowlingGame("0,10,10,5,0,10,5,5,10,5,5,10,5,5,10,10,0")
+        assertThat(game2.report()).isEqualTo(
+            """
+            #| 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
+            #| -, / | X | 5, - | X | 5, / | X | 5, / | X | 5, / | X, X, - |
+            #score: 180
             """.trimMargin("#")
         )
 
