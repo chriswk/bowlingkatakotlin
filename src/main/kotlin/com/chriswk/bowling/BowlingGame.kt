@@ -17,7 +17,7 @@ abstract class Frame(val rolls: IntArray, val frame: Int, val rollIdx: Int) {
     }
 }
 
-open class StrikeFrame(rolls: IntArray, frame: Int, rollIdx: Int) : Frame(rolls, frame, rollIdx) {
+class StrikeFrame(rolls: IntArray, frame: Int, rollIdx: Int) : Frame(rolls, frame, rollIdx) {
     override fun score(): Int {
         return 10 + firstBonusRoll + secondBonusRoll
     }
@@ -36,7 +36,7 @@ open class StrikeFrame(rolls: IntArray, frame: Int, rollIdx: Int) : Frame(rolls,
     }
 }
 
-open class SpareFrame(rolls: IntArray, frame: Int, rollIdx: Int) : Frame(rolls, frame, rollIdx) {
+class SpareFrame(rolls: IntArray, frame: Int, rollIdx: Int) : Frame(rolls, frame, rollIdx) {
 
     override fun score(): Int {
         return 10 + firstBonusRoll
