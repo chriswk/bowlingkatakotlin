@@ -1,5 +1,7 @@
 package com.chriswk.bowling
 
+import java.io.File
+
 abstract class Frame(val rolls: IntArray, val frame: Int, val rollIdx: Int) {
     val firstRoll = rolls[rollIdx]
     val secondRoll: Int = rolls[rollIdx + 1]
@@ -95,4 +97,9 @@ fun Int.toBowlingScore(): String {
         0 -> "-"
         else -> "$this"
     }
+}
+
+fun main(args: Array<String>) {
+    val gameString = File(args[0]).readLines().first()
+    println(BowlingGame(gameString).report())
 }
