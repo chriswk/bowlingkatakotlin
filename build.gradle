@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'org.jetbrains.kotlin.jvm' version '1.4.10'
+    id 'info.solidsoft.pitest' version '1.5.1'
 }
 
 group 'com.chriswk'
@@ -34,6 +35,9 @@ test {
     }
 }
 
+pitest {
+    junit5PluginVersion = '0.12'
+}
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
     kotlinOptions {

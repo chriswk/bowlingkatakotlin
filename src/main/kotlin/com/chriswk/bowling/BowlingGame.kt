@@ -51,11 +51,7 @@ class SpareFrame(rolls: IntArray, frame: Int, rollIdx: Int) : Frame(rolls, frame
     }
 }
 
-class OpenFrame(rolls: IntArray, frame: Int, rollIdx: Int) : Frame(rolls, frame, rollIdx) {
-    override fun score(): Int {
-        return rolls[rollIdx] + rolls[rollIdx + 1]
-    }
-}
+class OpenFrame(rolls: IntArray, frame: Int, rollIdx: Int) : Frame(rolls, frame, rollIdx) {}
 
 class BowlingGame(val scores: String) {
     private val rolls: IntArray = parseRolls().toIntArray()

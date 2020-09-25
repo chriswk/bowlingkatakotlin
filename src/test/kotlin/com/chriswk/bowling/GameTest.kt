@@ -139,4 +139,10 @@ class GameTest {
 
     }
 
+    @Test
+    fun `Bowling game has a score function`() {
+        val game = BowlingGame("5,5,10,5,5,10,5,5,10,5,5,10,5,5,10,10,0")
+        assertThat(game.score).isEqualTo(200)
+    }
+
 }
