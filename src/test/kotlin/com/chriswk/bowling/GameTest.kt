@@ -145,4 +145,10 @@ class GameTest {
         assertThat(game.score).isEqualTo(200)
     }
 
+    @Test
+    fun `Score candidates game`() {
+        val game = BowlingGame("2, 3, 5, 4, 9, 1, 2, 5, 3, 2, 4, 2, 3, 3, 4, 6, 10, 3, 2")
+        assertThat(game.score).isEqualTo(75)
+    }
+
 }
