@@ -7,17 +7,10 @@ class BowlingGame(val scores: String) {
     private val rolls: IntArray = parseRolls().toIntArray()
     private val frames: List<Frame> = (1..10).fold((emptyList<Frame>() to 0)) { (frames, rollIdx), frameIdx ->
         val firstThrow = rolls[rollIdx]
-        if (firstThrow == 10) {
-            val frame = StrikeFrame(rolls, frameIdx, rollIdx)
-            (frames + frame) to frame.nextFrame()
-        } else {
-            val frame = OpenFrame(rolls, frameIdx, rollIdx)
-            if (frame.score() == 10) {
-                (frames + SpareFrame(rolls, frameIdx, rollIdx)) to frame.nextFrame()
-            } else {
-                (frames + frame) to frame.nextFrame()
-            }
-        }
+        val secondThrow = rolls[rollIdx+1]
+        val thirdThrow = if (rolls.size > rollIdx + 2) { rolls[rollIdx+2] } else null
+        val frame = Frame(frameIdx, firstThrow, secondThrow, thirdThrow)
+        (frames + frame) to (rollIdx + frame.rollsInFrame())
     }.first
     val score = frames.sumBy { it.score() }
 

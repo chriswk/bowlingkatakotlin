@@ -1,18 +1,46 @@
 package com.chriswk.bowling
 
-abstract class Frame(val rolls: IntArray, val frame: Int, val rollIdx: Int) {
-    val firstRoll = rolls[rollIdx]
-    val secondRoll: Int = rolls[rollIdx + 1]
-    val firstBonusRoll: Int = rolls.getOrNull(nextFrame()) ?: 0
-    val secondBonusRoll: Int = rolls.getOrNull(nextFrame() + 1) ?: 0
-    open fun score(): Int {
-        return rolls[rollIdx] + rolls[rollIdx + 1]
+class Frame(val frame: Int, val firstRoll: Int, val secondRoll: Int, val thirdRoll: Int?) {
+    fun score(): Int {
+        return if (strike() || spare()) {
+            firstRoll + secondRoll + (thirdRoll ?: 0)
+        } else {
+            firstRoll + secondRoll
+        }
     }
 
-    open fun nextFrame(): Int = rollIdx + 2
+    val isTenth = frame == 10
+    fun strike() = strike(firstRoll)
+    fun strike(roll: Int) = roll == 10
+    fun spare() = !strike() && spare(firstRoll, secondRoll)
+    fun spare(roll1: Int, roll2: Int) = !strike(roll1) && roll1 + roll2 == 10
+    fun rollsInFrame() = if (strike()) {
+        1
+    } else {
+        2
+    }
+
     override fun toString(): String {
-        return "${firstRoll.toBowlingScore()}, ${secondRoll.toBowlingScore()}"
+        return if (isTenth) {
+            if (strike()) {
+                if (spare(secondRoll, thirdRoll!!)) {
+                    "${firstRoll.toBowlingScore()}, ${secondRoll.toBowlingScore()}, /"
+                } else {
+                    "${firstRoll.toBowlingScore()}, ${secondRoll.toBowlingScore()}, ${thirdRoll.toBowlingScore()}"
+                }
+            } else if (spare()) {
+                "${firstRoll.toBowlingScore()}, /, ${thirdRoll!!.toBowlingScore()}"
+            } else {
+                "${firstRoll.toBowlingScore()}, ${secondRoll.toBowlingScore()}"
+            }
+        } else {
+            if (strike()) {
+                firstRoll.toBowlingScore()
+            } else if (spare()) {
+                "${firstRoll.toBowlingScore()}, /"
+            } else {
+                "${firstRoll.toBowlingScore()}, ${secondRoll.toBowlingScore()}"
+            }
+        }
     }
 }
-
-class OpenFrame(rolls: IntArray, frame: Int, rollIdx: Int) : Frame(rolls, frame, rollIdx) {}
